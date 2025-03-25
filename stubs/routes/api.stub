@@ -1,0 +1,17 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use {{ namespace }}\{{ controllerName }};
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your package.
+|
+*/
+
+Route::prefix('api/{{ apiVersion }}')->group(function () {
+    Route::apiResource('{{ modelVariable }}', {{ controllerName }}::class);
+});

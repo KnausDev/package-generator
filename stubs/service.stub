@@ -1,0 +1,68 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ modelNamespace }}\{{ model }};
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class {{ class }}
+{
+    /**
+     * Get all {{ pluralModelVariable }}.
+     *
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getAll(int $perPage = 15): LengthAwarePaginator
+    {
+        return {{ model }}::paginate($perPage);
+    }
+
+    /**
+     * Get a {{ modelVariable }} by ID.
+     *
+     * @param int $id
+     * @return {{ model }}|null
+     */
+    public function getById(int $id): ?{{ model }}
+    {
+        return {{ model }}::find($id);
+    }
+
+    /**
+     * Create a new {{ modelVariable }}.
+     *
+     * @param array $data
+     * @return {{ model }}
+     */
+    public function create(array $data): {{ model }}
+    {
+        return {{ model }}::create($data);
+    }
+
+    /**
+     * Update an existing {{ modelVariable }}.
+     *
+     * @param {{ model }} ${{ modelVariable }}
+     * @param array $data
+     * @return {{ model }}
+     */
+    public function update({{ model }} ${{ modelVariable }}, array $data): {{ model }}
+    {
+        ${{ modelVariable }}->update($data);
+
+        return ${{ modelVariable }};
+    }
+
+    /**
+     * Delete a {{ modelVariable }}.
+     *
+     * @param {{ model }} ${{ modelVariable }}
+     * @return bool
+     */
+    public function delete({{ model }} ${{ modelVariable }}): bool
+    {
+        return ${{ modelVariable }}->delete();
+    }
+}

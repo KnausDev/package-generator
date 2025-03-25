@@ -1,0 +1,32 @@
+{
+    "name": "knausdev/package-generator",
+    "description": "Laravel package generator with custom structure and components",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Knuas",
+            "email": "peter@knaus.io"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/console": "^12.0",
+        "illuminate/support": "^12.0",
+        "wikimedia/composer-merge-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KnausDev\\PackageGenerator\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KnausDev\\PackageGenerator\\PackageGeneratorServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

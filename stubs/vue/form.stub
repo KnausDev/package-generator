@@ -1,0 +1,101 @@
+<template>
+  <div class="max-w-4xl mx-auto py-6">
+    <h1 class="text-2xl font-semibold mb-6">{{ isEditing ? 'Edit' : 'Create' }} {{ modelName }}</h1>
+
+    <form @submit.prevent="submitForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="space-y-4">
+{{ formFields }}
+      </div>
+
+      <div class="mt-6 flex items-center justify-between">
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          :disabled="isSubmitting"
+        >
+          {{ isSubmitting ? 'Saving...' : 'Save' }}
+        </button>
+
+        <button
+          type="button"
+          @click="goBack"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: '{{ modelName }}Form',
+
+  props: {
+    id: {
+      type: [Number, String],
+      default: null
+    }
+  },
+
+  data() {
+    return {
+      form: {
+{{ formData }}
+      },
+      errors: {},
+      isSubmitting: false,
+      isEditing: false
+    };
+  },
+
+  created() {
+    if (this.id) {
+      this.isEditing = true;
+      this.fetchData();
+    }
+  },
+
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get(`{{ apiUrl }}/${this.id}`);
+        this.form = response.data.data || response.data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    },
+
+    async submitForm() {
+      this.isSubmitting = true;
+      this.errors = {};
+
+      try {
+        const url = this.isEditing
+          ? `{{ apiUrl }}/${this.id}`
+          : '{{ apiUrl }}';
+
+        const method = this.isEditing ? 'put' : 'post';
+
+        const response = await axios[method](url, this.form);
+
+        this.$emit('saved', response.data.data || response.data);
+        this.goBack();
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          this.errors = error.response.data.errors;
+        } else {
+          console.error('Error submitting form:', error);
+        }
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
+
+    goBack() {
+      this.$router ? this.$router.go(-1) : window.history.back();
+    }
+  }
+};
+</script>

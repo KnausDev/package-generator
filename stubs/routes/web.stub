@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use {{ namespace }}\{{ controllerName }};
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your package.
+|
+*/
+
+Route::prefix('{{ modelVariable }}')->name('{{ modelVariable }}.')->group(function () {
+    Route::get('/', [{{ controllerName }}::class, 'index'])->name('index');
+    Route::get('/create', [{{ controllerName }}::class, 'create'])->name('create');
+    Route::post('/', [{{ controllerName }}::class, 'store'])->name('store');
+    Route::get('/{id}', [{{ controllerName }}::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [{{ controllerName }}::class, 'edit'])->name('edit');
+    Route::put('/{id}', [{{ controllerName }}::class, 'update'])->name('update');
+    Route::delete('/{id}', [{{ controllerName }}::class, 'destroy'])->name('destroy');
+});
