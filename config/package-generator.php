@@ -80,7 +80,7 @@ return [
     | require database fields.
     |
     */
-    'no_fields' => true,
+    'no_fields' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -93,6 +93,6 @@ return [
     | useful for creating backend-only packages or microservices.
     |
     */
-    'api_only' => true,
+    'api_only' => false,
 
 ];
