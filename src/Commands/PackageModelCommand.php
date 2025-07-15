@@ -35,8 +35,9 @@ class PackageModelCommand extends Command
                             {--type=composer : Package type (composer or domain)}
                             {--namespace= : Package namespace (default from config)}
                             {--path= : Optional custom path for package}
-                            {--api-only : Whether the model is API only (no frontend)}
-                            {--api-version=v1 : API version to use}';
+                            {--api-only= : Whether the model is API only (no frontend)}
+                            {--api-version=v1 : API version to use}
+                            {--no-fields : Skip the interactive field collection}';
 
     /**
      * The console command description.
@@ -82,7 +83,7 @@ class PackageModelCommand extends Command
         $this->modelName = $this->argument('model');
         $this->packageType = $this->option('type');
         $this->namespace = $this->option('namespace') ?: config('package-generator.namespace', 'KnausDev');
-        $this->isApiOnly = $this->option('api-only');
+        $this->isApiOnly = $this->option('api-only') ?? config('package-generator.api_only', false);
         $this->apiVersion = $this->option('api-version');
 
         // Validate package type
@@ -181,6 +182,11 @@ class PackageModelCommand extends Command
      */
     protected function collectFields(): void
     {
+        if ($this->option('no-fields') || config('package-generator.no_fields', false)) {
+            $this->info('Skipping field collection (--no-fields option or config setting used)');
+            return;
+        }
+
         $this->info('Define the fields for your model (Enter empty name to finish):');
 
         $fieldTypes = [

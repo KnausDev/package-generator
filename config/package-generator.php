@@ -68,4 +68,31 @@ return [
     |
     */
     'structure_variant' => 'standard',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Skip Field Collection
+    |--------------------------------------------------------------------------
+    |
+    | When set to true, the package generator will skip the interactive field
+    | collection process and create an empty model. This is useful when you
+    | want to define fields manually or when creating packages that don't
+    | require database fields.
+    |
+    */
+    'no_fields' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Only Mode
+    |--------------------------------------------------------------------------
+    |
+    | When set to true, the package generator will create packages with only
+    | API-related components (controllers, routes, resources) and skip
+    | frontend assets like Vue components, views, and web routes. This is
+    | useful for creating backend-only packages or microservices.
+    |
+    */
+    'api_only' => true,
+
 ];

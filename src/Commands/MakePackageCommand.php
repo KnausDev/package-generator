@@ -36,7 +36,8 @@ class MakePackageCommand extends Command
                             {--path= : Optional custom path for package}
                             {--model= : Optional model name (default derives from package name)}
                             {--api-only : Whether the package is API only (no frontend)}
-                            {--api-version=v1 : API version to use}';
+                            {--api-version=v1 : API version to use}
+                            {--no-fields : Skip field collection and create empty model}';
 
     /**
      * The console command description.
@@ -82,7 +83,7 @@ class MakePackageCommand extends Command
         $this->packageType = $this->option('type');
         $this->namespace = $this->option('namespace') ?: config('package-generator.namespace', 'KnausDev');
         $this->modelName = $this->option('model') ?: Str::singular(Str::studly($this->packageName));
-        $this->isApiOnly = $this->option('api-only');
+        $this->isApiOnly = $this->option('api-only') || config('package-generator.api_only', false);
         $this->apiVersion = $this->option('api-version');
 
         // Validate package type
@@ -216,6 +217,11 @@ class MakePackageCommand extends Command
      */
     protected function collectFields(): void
     {
+        if ($this->option('no-fields') || config('package-generator.no_fields', false)) {
+            $this->info('Skipping field collection as --no-fields option is set');
+            return;
+        }
+
         $this->info('Define the fields for your model (Enter empty name to finish):');
 
         $fieldTypes = [
