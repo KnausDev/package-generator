@@ -58,14 +58,13 @@ class DomainMigrateCommand extends Command
             $command .= ' --seed';
         }
 
-        // Add each migration path to the command
-        foreach ($migrationPaths as $path) {
-            $command .= ' --path=' . $path;
-        }
-
         // Execute the command
         $this->info("Running: {$command}");
-        $this->call(trim($command));
+        if ($this->option('fresh')) {
+            $this->call('migrate:fresh');
+        }
+        $this->call('migrate');
+        $this->call('migrate', ['--path' => $migrationPaths]);
 
         return Command::SUCCESS;
     }
