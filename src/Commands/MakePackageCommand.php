@@ -3,6 +3,7 @@
 namespace KnausDev\PackageGenerator\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 use KnausDev\PackageGenerator\FieldTypes\StringField;
@@ -595,6 +596,8 @@ EOT;
     }
 }
 EOT;
+
+        ServiceProvider::addProviderToBootstrapFile("{$this->namespace}\\{$this->packageName}\\{$providerName}");
 
         $this->filesystem->put($providerPath, $content);
 
