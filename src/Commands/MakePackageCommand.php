@@ -639,7 +639,7 @@ EOT;
             $this->info('3. The package should now be installed and ready to use!');
         } else {
             $this->info('Next steps:');
-            $this->info('1. Add the service provider to your config/app.php:');
+            $this->info('1. Add the service provider to your config/app.php or bootstrap/providers.php (depends on your Laravel version):');
             $this->info('   ' . $this->namespace . '\\' . Str::studly($this->packageName) . 'ServiceProvider::class,');
             $this->info('');
             $this->info('2. Make sure your composer.json has the Wikimedia Merge Plugin configured:');
