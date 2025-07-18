@@ -20,12 +20,6 @@ class InstallCommand extends Command
         // Create directories
         $this->createDirectories();
 
-        // Generate route registration files
-        $this->call('knausdev:domain-routes');
-
-        // Update main route files
-        $this->updateRouteFiles();
-
         // Update composer.json for domain package support
         $this->updateComposerConfig();
 
@@ -65,52 +59,6 @@ class InstallCommand extends Command
                 $this->info("Created directory: {$directory}");
             }
         }
-    }
-
-    /**
-     * Update main route files to include domain routes.
-     */
-    protected function updateRouteFiles(): void
-    {
-        $this->updateRouteFile('web');
-        $this->updateRouteFile('api');
-    }
-
-    /**
-     * Update a specific route file.
-     */
-    protected function updateRouteFile(string $type): void
-    {
-        $routeFile = base_path("routes/{$type}.php");
-        $domainRouteFile = "routes/domain_{$type}.php";
-
-        if (!File::exists($routeFile)) {
-            $this->error("Route file not found: {$routeFile}");
-            return;
-        }
-
-        if (!File::exists(base_path($domainRouteFile))) {
-            $this->error("Domain route file not found: {$domainRouteFile}");
-            return;
-        }
-
-        $content = File::get($routeFile);
-        $includeStatement = "require base_path('{$domainRouteFile}');";
-
-        if (Str::contains($content, $includeStatement)) {
-            $this->info("Route file {$routeFile} already includes domain routes.");
-            return;
-        }
-
-        // Backup original file
-        File::copy($routeFile, $routeFile . '.backup');
-        $this->info("Backed up original route file to: {$routeFile}.backup");
-
-        // Add the include statement at the end of the file
-        $content .= "\n\n// Domain Routes\n{$includeStatement}\n";
-        File::put($routeFile, $content);
-
-        $this->info("Updated route file: {$routeFile}");
     }
 
     /**
