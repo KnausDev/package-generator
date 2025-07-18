@@ -597,7 +597,9 @@ EOT;
 }
 EOT;
 
-        ServiceProvider::addProviderToBootstrapFile("{$this->namespace}\\{$this->packageName}\\{$providerName}");
+        if (config('package-generator.register_provider', false)) {
+            ServiceProvider::addProviderToBootstrapFile("{$this->namespace}\\{$this->packageName}\\{$providerName}");
+        }
 
         $this->filesystem->put($providerPath, $content);
 

@@ -95,4 +95,20 @@ return [
     */
     'api_only' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Auto-Register Service Provider
+    |--------------------------------------------------------------------------
+    |
+    | When set to true, the package generator will automatically register
+    | the generated service provider in your Laravel application's bootstrap
+    | file. When false, you'll need to manually add the provider to your
+    | application configuration. This is useful for controlling provider
+    | registration during development vs production deployments.
+    |
+    | You can find this file in Laravel >=11 'bootstrap/providers.php'
+    |
+    */
+    'register_provider' => false,
+
 ];
