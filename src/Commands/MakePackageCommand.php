@@ -555,7 +555,7 @@ class MakePackageCommand extends Command
         $content = <<<EOT
 <?php
 
-namespace {$this->namespace};
+namespace {$this->namespace}\\{$this->packageName};
 
 use Illuminate\Support\ServiceProvider;
 
