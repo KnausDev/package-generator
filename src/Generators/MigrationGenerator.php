@@ -32,7 +32,7 @@ class MigrationGenerator extends BaseGenerator
         $timestamp = date('Y_m_d_His');
         $tableName = $this->getTableName();
 
-        return "create_{$this->namespace}_{$tableName}_table_{$timestamp}.php";
+        return "{$timestamp}_create_{$this->namespace}_{$tableName}_table.php";
     }
 
     /**
